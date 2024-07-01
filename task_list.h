@@ -1,34 +1,43 @@
+#ifndef TASK_LIST_H
+#define TASK_LIST_H
 
-typedef enum {
-    ATIVA,
-    CONCLUIDA
-} Estado;
-
-struct task {
+struct taskNode {
     int id;
-    char *description[300];
+    char description[300];
     int time;
-    Estado status;  
-    struct task *prev;
-    struct task *next;
+    int status;  
+    struct taskNode *left;
+    struct taskNode *right;
     
 };
-typedef struct task task;
+typedef struct taskNode taskNode;
 
-struct list {
-    struct task *head;
-    struct task *tail;
-};
-typedef struct list list;
 
-void init_list(list *list);
+void initializeRandom();
 
-void addTask (list *list, char *description, int time);
+int generateId();
 
-task* findById(list *list, int id);
+int idExists( taskNode *root, int id);
 
-void showTasks(list *list);
+taskNode* findById(taskNode *root, int id);
 
-void concludeTask(list *list, int id);
+taskNode* createTask(taskNode *root, char *description, int time);
 
-void excludeTask(list *list, int id);
+taskNode* addTask(taskNode *root, taskNode *newTask);
+
+taskNode* addTaskTime(taskNode *root, taskNode *newTask);
+
+void printTask(taskNode *task);
+
+void showAllTasks(taskNode *root);
+
+void showActiveTasks(taskNode *root);
+
+void showCompletedTasks(taskNode *root);
+
+void concludeTask(taskNode *root, int id);
+
+taskNode* findMin(taskNode *root);
+
+taskNode* excludeTask(taskNode *root, int id);
+#endif
